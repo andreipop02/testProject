@@ -1,16 +1,16 @@
-import {useNavigation, useRoute} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import {styles} from './userPageStyles';
-import {useUsersContext} from '../../../context/UsersContext';
-import {strings} from '../../../constants';
+import { styles } from './userPageStyles';
+import { useUsersContext } from '../../../context/UsersContext';
+import { strings } from '../../../constants';
 
 interface UserPageProps {}
 
 const UserPage: React.FC<UserPageProps> = () => {
   const [currentUserIndex, setCurrentUserIndex] = useState<number>(0);
-  const {users, defaultUserId} = useUsersContext();
+  const { users, defaultUserId } = useUsersContext();
   const navigation = useNavigation();
 
   const switchUser = (goForward: boolean) => {
@@ -32,11 +32,11 @@ const UserPage: React.FC<UserPageProps> = () => {
   }, []);
 
   useEffect(() => {
-    navigation.setOptions({title: users[currentUserIndex].name});
+    navigation.setOptions({ title: users[currentUserIndex].name });
   }, [currentUserIndex]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.mainContainer}>
       <Text style={styles.textStyle}>
         {strings.userPage.username} {users[currentUserIndex].username}
       </Text>

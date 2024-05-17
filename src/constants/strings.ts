@@ -3,7 +3,7 @@ export const strings = {
     screenTitle: 'My list of users',
   },
   userPage: {
-    username: "Username:",
+    username: 'Username:',
     prevButton: 'Prev user',
     nextButton: 'Next user',
   },

@@ -1,10 +1,11 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { colors } from '../../../constants';
 
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.homepage.background,
   },
 
@@ -28,18 +29,18 @@ export const styles = StyleSheet.create({
 
   userComponentTouchable: {
     width: '45%',
-    margin: 10,
+    marginHorizontal: 10,
+    marginVertical: 10,
     justifyContent: 'center',
   },
 
   usersListUpperContainer: {
     flex: 0.8,
-    alignSelf: 'center',
   },
 
   usersListInnerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
 });

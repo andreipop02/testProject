@@ -9,8 +9,9 @@ import React, {
   useState,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNetInfo} from '@react-native-community/netinfo';
-import {User} from '../constants';
+import { useNetInfo } from '@react-native-community/netinfo';
+
+import { User } from '../constants';
 
 type UsersContextType = {
   users: User[];
@@ -38,7 +39,7 @@ const updateUsersList = async (usersList: User[]) => {
   }
 };
 
-const retrieveUsersList = async () => {
+const getUsersList = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('usersList');
     return jsonValue != null ? JSON.parse(jsonValue) : null;
@@ -47,25 +48,28 @@ const retrieveUsersList = async () => {
   }
 };
 
-const UsersProvider = (props: {children: ReactNode}): ReactElement => {
+const UsersProvider = (props: { children: ReactNode }): ReactElement => {
   const [users, setUsers] = useState<User[]>([]);
   const [defaultUserId, setDefaultUserId] = useState<number>(0);
-  const {isConnected} = useNetInfo();
+  const { isConnected } = useNetInfo();
 
   useEffect(() => {
-    const getUsersList = async () => {
-      let newUsersList: User[] = [];
+    const fetchUsersList = async () => {
+      let newUsersList: User[] = await getUsersList();
       if (isConnected) {
-        const rawData = await fetch(
-          'https://jsonplaceholder.typicode.com/users',
-        );
-        newUsersList = await rawData.json();
-      } else {
-        newUsersList = await retrieveUsersList();
+        try {
+          const rawUsersDataArray = await fetch(
+            'https://jsonplaceholder.typicode.com/users',
+          );
+          const usersObjectsArray = await rawUsersDataArray.json();
+          if (usersObjectsArray.length > 0) newUsersList = usersObjectsArray;
+        } catch (error) {
+          throw new Error(`${error}`);
+        }
       }
-      if (newUsersList !== null) setUsers(newUsersList);
+      if (newUsersList.length > 0) setUsers(newUsersList);
     };
-    getUsersList();
+    if (isConnected !== null) fetchUsersList();
   }, [isConnected]);
 
   useEffect(() => {
@@ -75,9 +79,9 @@ const UsersProvider = (props: {children: ReactNode}): ReactElement => {
   return (
     <UsersContext.Provider
       {...props}
-      value={{users, setUsers, defaultUserId, setDefaultUserId}}
+      value={{ users, setUsers, defaultUserId, setDefaultUserId }}
     />
   );
 };
 
-export {UsersProvider, useUsersContext};
+export { UsersProvider, useUsersContext };

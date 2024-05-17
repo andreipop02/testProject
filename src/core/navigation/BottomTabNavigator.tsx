@@ -1,10 +1,10 @@
-import {Image} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import MainStackNavigator from './MainStackNavigator';
+import { Image } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
-import {images, colors} from '../../constants';
-import {styles} from './navigationStyles';
+import MainStackNavigator from './MainStackNavigator';
+import { images, colors } from '../../constants';
+import { styles } from './navigationStyles';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +14,7 @@ const BottomTabNavigator = () => {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          headerStyle: {backgroundColor: colors.navigation.statusBarColor},
+          headerStyle: { backgroundColor: colors.navigation.statusBarColor },
           tabBarIcon: () => (
             <Image source={images.homeIcon} style={styles.bottomTabIcons} />
           ),
@@ -25,7 +25,7 @@ const BottomTabNavigator = () => {
         <Tab.Screen
           name="BottomStackHome"
           component={MainStackNavigator}
-          options={{tabBarLabel: 'Home'}}
+          options={{ tabBarLabel: 'Home' }}
         />
       </Tab.Navigator>
     </NavigationContainer>
